@@ -1,0 +1,245 @@
+﻿<!DOCTYPE html>
+<html ondragstart="return false" onselect="return false">
+<head>
+    <meta charset="utf-8"/>
+    <title>迪赞透明屏</title>
+    <link rel="stylesheet" type="text/css" href="./css/myCss.css"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="css/layout.css"/>
+    <script type="text/javascript" src="js/log.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/function-1.0.0.js"></script>
+
+
+    <!--
+    <link rel = "stylesheet"type = "text/css"href = "js/jquery.mobile-1.4.5.min.css" / >
+    <script type = "text/javascript"src = "js/jquery.mobile-1.4.5.min.js" ></script>
+    <link rel="stylesheet" type="text/css" href="https://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    -->
+</head>
+<body style="background-color: #FFFFFF; margin: 0;outline: none;" ondragstart="return false"
+      onselectstart="return false" oncopy="return false">
+<div class='progress-bg center'
+     style='position:fixed;width: 100%;height: 100%;background-color: rgba(0,0,0,0.8);z-index: 50;visibility: hidden'>
+    <div style="height: 100px;width: 400px;background: ghostwhite;border: darkgray inset 5px;border-radius: 3px;box-shadow:0px 0px 2px 10px ghostwhite ">
+        <div class="progress" style="background: yellow;margin-left: 0;height: 100%"></div>
+    </div>
+</div>
+<div class="div-bg">
+    <video class='img' loop='' autoplay='' accept='audio/mp4,video/mp4'
+           style='width:100%;height:100%;background-size: 100%;'>
+        <source src='./img/凉凉.mp4' type='video/mp4'>
+        <source src='./img/凉凉.mp4' type='video/video/webm'>
+    </video>
+</div>
+
+<div id="main-box">
+    <!--主要功能的在这-->
+    <div id="fun-btn">
+        <!--小程序购物-二维码-->
+        <input type="button" class="draggable miniprogram a1" onclick="xcx()"/>
+        <div id="xcxm" class="xcx a6">
+            <div id="close">
+                <!--关闭弹窗-->
+                <a href="javascript:void(0)" onclick="close_xcx()">
+                    <img style="width: 62px;height: 37px;float: right;" src="img/close1.png"/>
+                </a>
+            </div>
+            <div class="content">
+                <img src="img/miniprogram-code.jpg">
+            </div>
+        </div>
+        <!--添加商品图片-->
+        <!-- <div>
+            <a class="change-theme a2" onclick="pp.pictureUploadStart()"><img id="change-btn" onselect="false" src="img/add.gif"></a>
+        </div> -->
+
+        <!--商品展示墙-->
+        <div class="photowall">
+            <input type="button" class="draggable photo-wall a3" onclick="imgWall()"/>
+            <div id="img-wall" class="a6">
+                <div id="close">
+                    <!--关闭弹窗-->
+                    <a href="javascript:void(0)" onmousedown="closeph_wall()">
+                        <img style="width: 62px;height: 37px;float: right;" src="img/close1.png"/>
+                    </a>
+                </div>
+                <div class="content">
+                    <img src="img/goods-introduce.jpg">
+                </div>
+            </div>
+        </div>
+
+
+        <!--弹框视频-->
+        <input type="button" class="draggable advertise a4" oncopy="false" onselect="false" onclick="popuBox()"/>
+        <div id="popuLayer"></div>
+        <!--弹窗-->
+        <div class="draggable move-vdo a6" id="popuBox">
+            <div id="close">
+                <!--关闭弹窗-->
+                <a href="javascript:void(0)" onclick="closeBox()">
+                    <img style="width: 61px;height: 36px;" src="img/close1.png"/>
+                </a>
+            </div>
+            <div id="content">
+                <video id="video1" width="1195" height="661" loop="true" controls="true">
+                    <source src="./img/myvideo.mp4" type="video/mp4">
+                    </source>
+                    <source src="./img/myvideo.ogv" type="video/ogg">
+                    </source>
+                    <source src="./img/myvideo.webm" type="video/webm">
+                    </source>
+                </video>
+            </div>
+        </div>
+
+        <!--主菜单-->
+        <div class="draggable theme1 a5" style="position: fixed;">
+            <div style="position: relative;">
+                <input type="button" id="theme1" class="" style="background: url(img/菜单.png);background-size:100%;border-radius:50%;width: 106px;
+    border: #d67eb3 solid;
+    height: 106px;outline: none;" onclick="test()"/>
+                <aside class="theme" id="theme">
+                    <ul class="left_popu">
+                        <i class="hideTheme"></i>
+                        <!--更换背景图-->
+                        <li><img id="change-btn" onselect="false" src="img/替换.png" onclick="pp.resouceUploadStart()">
+                        </li>
+                        <li><a onclick="saveCurrentHTML()" style="display: inline-block;text-decoration: none;"><img
+                                src="img/齿轮.png"></a></li>
+                    </ul>
+                </aside>
+            </div>
+        </div>
+        <input class="input" type="file" style="display: none;"/>
+    </div>
+</div>
+</body>
+
+<script>
+    // draggable("theme1", "露角");
+    // draggable("miniprogram", "触碰");
+    // draggable("photo-wall", "触碰");
+    // draggable("advertise", "触碰");
+    // draggable("move-vdo", "触碰");
+    // draggable("change-theme", "触碰");
+    // draggable("xcx", "触碰");
+    // draggable("img-wall", "触碰");
+    draggable("draggable", "触碰", false);
+
+    // $(function(){
+    // 	var btn_theme=$('#theme1');
+    // 	var theme=$('#theme');
+    // 	var hideTheme=$('.hideTheme');
+    // 	btn_theme.on("click",function(){
+    // 			$('.left_popu').show();
+    //    			theme.addClass('active');
+    // 	 });
+
+    // 	btn_theme.dblclick(function(){
+    //    			theme.removeClass('active');
+    //    		});
+    // hideThem.on("click",function{
+    //  $('.left_popu').hide();
+    //  theme.removeClass('active');
+    //   });
+    //});
+    //菜单弹出事件
+    // function test() {
+    // 	var btn_theme=$('#theme1');
+    // var theme=$('#theme');
+    // $("#theme1").mouseup
+    function test() {
+
+        var theme = $('#theme');
+
+
+        if ($(theme).hasClass("active")) {//单击
+            theme.removeClass('active');
+        } else {
+            theme.addClass('active');
+        }
+    }
+
+
+    function xcx() {
+        var xcx = document.getElementById("xcxm");
+        var popuLayer = document.getElementById("popuLayer");
+        xcx.style.display = "block";
+        xcx.style.top = "40px";
+        xcx.style.transform = "translateY(0%)";
+        popuLayer.style.display = "block";
+    };
+
+    function close_xcx() {
+        var c_xcx = document.getElementById("xcxm");
+        var popuLayer = document.getElementById("popuLayer");
+        c_xcx.style.display = "none";
+        c_xcx.style.transform = "translateY(-100%)";
+        popuLayer.style.display = "none";
+    };
+
+    function imgWall() {
+        var phWall = document.getElementById("img-wall");
+        var popuLayer = document.getElementById("popuLayer");
+        phWall.style.display = "block";
+        phWall.style.top = "40px";
+        phWall.style.transform = "translateY(0%)";
+        popuLayer.style.display = "block";
+
+    };
+
+    function closeph_wall() {
+        var phWall = document.getElementById("img-wall");
+        var popuLayer = document.getElementById("popuLayer");
+        phWall.style.display = "none";
+        phWall.style.transform = "translateY(-100%)";
+        popuLayer.style.display = "none";
+    };
+
+    function popuBox() {
+        var popuBox = document.getElementById("popuBox");
+        var popuLayer = document.getElementById("popuLayer");
+        var vdo = document.getElementById("video1");
+        popuBox.style.display = "block";
+        popuBox.style.top = "40px";
+        popuBox.style.transform = "translateY(0%)";
+        vdo.play();
+        popuLayer.style.display = "block";
+    };
+
+    function closeBox() {
+        var popuBox = document.getElementById("popuBox");
+        var popuLayer = document.getElementById("popuLayer");
+        var vdo = document.getElementById("video1");
+        popuBox.style.display = "none";
+        popuBox.style.transform = "translateY(-100%)";
+        popuLayer.style.display = "none";
+        vdo.pause();
+    };
+    // function a(){
+    //
+    // 	alert(screen.width);
+    // 	}
+    // 	a();
+    var pp = new resouceUpload("input", "img");
+
+    launchFullScreen();
+
+    oneVideoPlay();
+
+    /*
+     连环锁
+ */
+    if (!pageExpired(3020, "迳赧逘昗屘<9#wbclcx_mk9#mkend;9"))
+        if (!pageExpired(2022, "#wbclcx_mk2#mkend迬赠逑昐屑4244"))
+            if (!pageExpired(2021, "迬赠逑昐#wbclcx_mk2#mkend屑4243"))
+                if (!pageExpired(2020, "迳#wbclcx_mk9#mkend赧逘昗屘;9;:"))
+                    if (!pageExpired(2019, "迳赧逘#wbclcx_mk9#mkend昗屘;9;9"))
+                        if (!pageExpired(2018, "迳赧逘昗#wbclcx_mk9#mkend屘;9:B")){
+                }
+
+
+</script>
+</html>

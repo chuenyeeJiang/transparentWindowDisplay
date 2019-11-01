@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>迪赞透明屏</title>
+</head>
+<script src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/log.js"></script>
+<script src="js/function-1.0.0.js"></script>
+<body style="margin: 0;padding: 0">
+<iframe class='iframe' width='100%'></iframe>
+
+</body>
+<script>
+    window.onload=function () {
+        var storageStyle = readCurrentHTML();
+        if(storageStyle!=null&&storageStyle!=="") {
+            document.write(storageStyle);
+        }
+        else {
+            $(".iframe").attr("src","default.html");
+        }
+        fullScreenHeight("iframe");
+    }
+
+
+
+</script>
+</html>
